@@ -3,12 +3,13 @@ package handler
 import (
 	"errors"
 	"fmt"
+	"strings"
+
 	"github.com/keptn/go-utils/pkg/api/models"
 	keptnv2 "github.com/keptn/go-utils/pkg/lib/v0_2_0"
 	"github.com/keptn/keptn/go-sdk/pkg/sdk"
 	"github.com/keptn/keptn/webhook-service/lib"
 	logger "github.com/sirupsen/logrus"
-	"strings"
 )
 
 const webhookConfigFileName = "webhook/webhook.yaml"
@@ -84,7 +85,7 @@ func (th *TaskHandler) Execute(keptnHandler sdk.IKeptn, event sdk.KeptnEvent) (i
 		}
 		err = keptnHandler.SendFinishedEvent(event, result)
 		if err != nil {
-			return nil, sdkError(fmt.Sprintf("could not send finished event: %s", err.Error()), err)
+			return nil, sdkError(fmt.Sprintf("could not send finished event: request '%s' %s", webhook.Requests[0], err.Error()), err)
 		}
 		return result, nil
 	}
@@ -170,13 +171,13 @@ func (th *TaskHandler) onStartedWebhookExecution(keptnHandler sdk.IKeptn, event 
 		// if sendFinished is set, we only need to send one started event
 		// the webhook service will then send a correlating .finished event with the aggregated response payloads
 		if err := keptnHandler.SendStartedEvent(event); err != nil {
-			return sdkError(fmt.Sprintf("could not send .started event: %s", err.Error()), err)
+			return sdkError(fmt.Sprintf("could not send .started event: request '%s': %s", webhook.Requests[0], err.Error()), err)
 		}
 	} else {
 		// if sendFinished is set to false, we need to send a .started event for each webhook request to be executed
-		for range webhook.Requests {
+		for _, req := range webhook.Requests {
 			if err := keptnHandler.SendStartedEvent(event); err != nil {
-				return sdkError(fmt.Sprintf("could not send .started event: %s", err.Error()), err)
+				return sdkError(fmt.Sprintf("could not send .started event: request '%s': %s", req, err.Error()), err)
 			}
 		}
 	}
