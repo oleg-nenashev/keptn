@@ -3,6 +3,11 @@ package common
 import (
 	"errors"
 	"fmt"
+	"net/url"
+	"os"
+	"strings"
+	"time"
+
 	"github.com/Masterminds/semver/v3"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/google/uuid"
@@ -10,10 +15,6 @@ import (
 	keptncommon "github.com/keptn/go-utils/pkg/lib/keptn"
 	keptnv2 "github.com/keptn/go-utils/pkg/lib/v0_2_0"
 	"gopkg.in/yaml.v3"
-	"net/url"
-	"os"
-	"strings"
-	"time"
 )
 
 const defaultKeptnNamespace = "keptn"

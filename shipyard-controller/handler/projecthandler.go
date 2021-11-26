@@ -1,14 +1,15 @@
 package handler
 
 import (
+	"net/http"
+	"sort"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	keptnv2 "github.com/keptn/go-utils/pkg/lib/v0_2_0"
 	"github.com/keptn/keptn/shipyard-controller/common"
 	"github.com/keptn/keptn/shipyard-controller/models"
 	log "github.com/sirupsen/logrus"
-	"net/http"
-	"sort"
 )
 
 type IProjectHandler interface {
