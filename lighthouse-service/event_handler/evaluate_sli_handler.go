@@ -240,8 +240,7 @@ func evaluateObjectives(e *keptnv2.GetSLIFinishedEventData, sloConfig *keptn.Ser
 		} else {
 			isWarning = false
 		}
-		aggregatedValues, _ := aggregateValues(previousSLIResults, sloConfig.Comparison)
-		sliEvaluationResult.Value.ComparedValue = aggregatedValues
+
 		sliEvaluationResult.PassTargets = passTargets
 		sliEvaluationResult.WarningTargets = warningTargets
 		sliEvaluationResult.KeySLI = objective.KeySLI
@@ -388,10 +387,10 @@ func evaluateComparison(sliResult *keptnv2.SLIResult, co *criteriaObject, previo
 	var targetValue float64
 
 	aggregatedValue, skip := aggregateValues(previousResults, comparison)
+	sliResult.ComparedValue = aggregatedValue
 	if skip {
 		return true, nil
 	}
-
 	// calculate the comparison value
 	if co.CheckPercentage && co.CheckIncrease {
 		targetValue = (aggregatedValue * (100.0 + co.Value)) / 100.0
@@ -487,6 +486,9 @@ func calculatePercentile(values sort.Float64Slice, perc float64) float64 {
 
 func evaluateFixedThreshold(sliResult *keptnv2.SLIResult, co *criteriaObject, violation *keptnv2.SLITarget) (bool, error) {
 	violation.TargetValue = co.Value
+	//compared value is used only if the criteria is a comparison,
+	//otherwise we just need to set targetValue
+	//sliResult.ComparedValue = co.Value
 	return evaluateValue(sliResult.Value, co.Value, co.Operator)
 }
 
