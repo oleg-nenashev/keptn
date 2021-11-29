@@ -427,6 +427,7 @@ jobs:
           UNLEASH_SERVICE_VERSION: "release-0.3.2"
         run: |
           cd test/go-tests
+          mkdir test-reports
           gotestsum --junitfile test-reports/test-log-ingestion.xml -- -run LogIngestion -v
           gotestsum --junitfile test-reports/test-log-forwarding.xml -- -run LogForwarding -v
           gotestsum --junitfile test-reports/test-sequence-state.xml -- -run SequenceState -v
