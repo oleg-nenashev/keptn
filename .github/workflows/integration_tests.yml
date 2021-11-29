@@ -625,6 +625,7 @@ jobs:
 
   publish-test-report:
     runs-on: ubuntu-20.04
+    needs: integration-test
     steps:
       - name: Download test reports
         uses: actions/download-artifact@v2
