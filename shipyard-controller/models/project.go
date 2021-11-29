@@ -5,8 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
-	"strings"
 
 	keptncommon "github.com/keptn/go-utils/pkg/lib/keptn"
 	keptnv2 "github.com/keptn/go-utils/pkg/lib/v0_2_0"
@@ -111,7 +109,7 @@ func (createProjectParams *CreateProjectParams) Validate() error {
 		return fmt.Errorf("provided shipyard file is not valid: %s", err.Error())
 	}
 
-	if err := validateGitRemoteURL(createProjectParams.GitRemoteURL); err != nil {
+	if err := common.ValidateGitRemoteURL(createProjectParams.GitRemoteURL); err != nil {
 		return fmt.Errorf("provided gitRemoteURL is not valid: %s", err.Error())
 	}
 
@@ -127,24 +125,8 @@ func (updateProjectParams *UpdateProjectParams) Validate() error {
 		return errors.New("provided project name is not a valid Keptn entity name")
 	}
 
-	if err := validateGitRemoteURL(updateProjectParams.GitRemoteURL); err != nil {
+	if err := common.ValidateGitRemoteURL(updateProjectParams.GitRemoteURL); err != nil {
 		return fmt.Errorf("provided gitRemoteURL is not valid: %s", err.Error())
-	}
-
-	return nil
-}
-
-func validateGitRemoteURL(gitUrl string) error {
-	if gitUrl == "" {
-		return nil
-	}
-
-	if _, err := url.ParseRequestURI(gitUrl); err != nil {
-		return fmt.Errorf("unable to parse requested gitRemoteURL: %s", gitUrl)
-	}
-
-	if !strings.HasPrefix(gitUrl, "https://") && !strings.HasPrefix(gitUrl, "http://") {
-		return fmt.Errorf("only http or https protocols are supported in gitRemoteURL")
 	}
 
 	return nil
