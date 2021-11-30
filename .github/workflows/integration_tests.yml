@@ -444,7 +444,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-report-junit
-          path: test/go/tests/test-reports/test-*.xml
+          path: test/go-tests/test-reports/test-*.xml
 
       - name: Test Airgapped Images
         id: test_airgapped_images
