@@ -676,12 +676,13 @@ func TestUpdate_UpdateProjectShipyardResourceFails(t *testing.T) {
 	}
 
 	instance := NewProjectManager(configStore, secretStore, projectMVRepo, taskSequenceRepo, eventRepo, sequenceQueueRepo, eventQueueRepo)
+	myShipyard := "my-shipyard"
 	params := &models.UpdateProjectParams{
 		GitRemoteURL: "git-url",
 		GitToken:     "git-token",
 		GitUser:      "git-user",
 		Name:         common.Stringp("my-project"),
-		Shipyard:     "my-shipyard",
+		Shipyard:     &myShipyard,
 	}
 	err, rollback := instance.Update(params)
 	assert.NotNil(t, err)
@@ -769,12 +770,13 @@ func TestUpdate_UpdateProjectInRepositoryFails(t *testing.T) {
 	}
 
 	instance := NewProjectManager(configStore, secretStore, projectMVRepo, taskSequenceRepo, eventRepo, sequenceQueueRepo, eventQueueRepo)
+	myShipyard := "my-shipyard"
 	params := &models.UpdateProjectParams{
 		GitRemoteURL: "git-url",
 		GitToken:     "git-token",
 		GitUser:      "git-user",
 		Name:         common.Stringp("my-project"),
-		Shipyard:     "my-shipyard",
+		Shipyard:     &myShipyard,
 	}
 	err, rollback := instance.Update(params)
 	assert.NotNil(t, err)
@@ -792,12 +794,12 @@ func TestUpdate_UpdateProjectInRepositoryFails(t *testing.T) {
 		GitRemoteURI:    "git-url",
 		GitUser:         "git-user",
 		ProjectName:     "my-project",
-		Shipyard:        "my-shipyard",
+		Shipyard:        myShipyard,
 		ShipyardVersion: "v1",
 	}
 
 	updateShipyardResourceData := &keptnapimodels.Resource{
-		ResourceContent: params.Shipyard,
+		ResourceContent: *params.Shipyard,
 		ResourceURI:     common.Stringp("shipyard.yaml")}
 
 	rollbackShipyardResourceData := &keptnapimodels.Resource{
@@ -874,12 +876,13 @@ func TestUpdate(t *testing.T) {
 	}
 
 	instance := NewProjectManager(configStore, secretStore, projectMVRepo, taskSequenceRepo, eventRepo, sequenceQueueRepo, eventQueueRepo)
+	myShipyard := "my-shipyard"
 	params := &models.UpdateProjectParams{
 		GitRemoteURL: "git-url",
 		GitToken:     "git-token",
 		GitUser:      "git-user",
 		Name:         common.Stringp("my-project"),
-		Shipyard:     "my-shipyard",
+		Shipyard:     &myShipyard,
 	}
 	err, rollback := instance.Update(params)
 	assert.Nil(t, err)
@@ -902,7 +905,7 @@ func TestUpdate(t *testing.T) {
 	}
 
 	expectedUpdateShipyardResourceData := &keptnapimodels.Resource{
-		ResourceContent: params.Shipyard,
+		ResourceContent: *params.Shipyard,
 		ResourceURI:     common.Stringp("shipyard.yaml")}
 
 	assert.Equal(t, projectUpdateData, configStore.UpdateProjectCalls()[0].Project)
@@ -967,7 +970,7 @@ func TestUpdate_WithEmptyShipyard_ShallNotUpdateResource(t *testing.T) {
 		GitToken:     "git-token",
 		GitUser:      "git-user",
 		Name:         common.Stringp("my-project"),
-		Shipyard:     "",
+		Shipyard:     nil,
 	}
 	err, rollback := instance.Update(params)
 	assert.Nil(t, err)
@@ -1032,7 +1035,7 @@ func TestUpdate_WithEmptyGitCredentials_ShallNotUpdateResource(t *testing.T) {
 		GitToken:     "",
 		GitUser:      "",
 		Name:         common.Stringp("my-project"),
-		Shipyard:     "",
+		Shipyard:     nil,
 	}
 	err, rollback := instance.Update(params)
 	assert.Nil(t, err)
