@@ -69,6 +69,8 @@ github.com/keptn/go-utils v0.11.0 h1:cwr9BDkDQcsURwj9pkkTzTs4M2HDqlgv1mrllPfysxY
 github.com/keptn/go-utils v0.11.0/go.mod h1:wOOwrQxPrKNzEzP7xK58MLikUuQXi/HPvKlOmuS5qMk=
 github.com/keptn/keptn/go-sdk v0.0.0-20211102091047-cb9394f33dee h1:G3zQNv5xxamheO29MyZnCh+gW+bjh22IguvI3DzQIqs=
 github.com/keptn/keptn/go-sdk v0.0.0-20211102091047-cb9394f33dee/go.mod h1:nYNCQzPBWFFWPB2ljoO1xj41PeudLpLG6sA1FQAV8OM=
+github.com/keptn/keptn/go-sdk v0.0.0-20211130124358-7d29e8dca7c8 h1:pRi+WIuig3f8ATE0JPOhGSJZjkLXmaQc93WI5FPN+Ag=
+github.com/keptn/keptn/go-sdk v0.0.0-20211130124358-7d29e8dca7c8/go.mod h1:MuQBrF54qgurj9W592ORBfk875Jk2Zx7ZcJ1iDPyyTs=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
